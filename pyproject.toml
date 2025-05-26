@@ -1,8 +1,9 @@
 [project]
-name = "Data Warehouse Connector"
+name = "data_Warehouse_connector"
 version = "0.1.0"
 description = ""
 requires-python = "==3.12.*"
 dependencies = [
     "psycopg2-binary",
+    "sqlalchemy"
 ]

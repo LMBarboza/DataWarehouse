@@ -1,0 +1,38 @@
+services:
+  postgres_db:
+    image: postgres:15 
+    container_name: pgsql 
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-myuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mysecretpassword}
+      POSTGRES_DB: ${POSTGRES_DB:-mydatabase}
+    ports:
+      - "${POSTGRES_PORT_HOST:-54320}:5432" 
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-postgres} -d $${POSTGRES_DB:-postgres} -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  app:
+    build:
+      context: . 
+      dockerfile: Dockerfile
+    container_name: python 
+    restart: on-failure 
+    depends_on:
+      postgres_db:
+        condition: service_healthy 
+    environment:
+      DB_HOST: postgres_db 
+      DB_NAME: ${POSTGRES_DB:-mydatabase}
+      DB_USER: ${POSTGRES_USER:-myuser}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-mysecretpassword}
+    command: uv run main.py --create_db
+
+volumes:
+  pg_data: {}

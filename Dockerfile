@@ -8,7 +8,7 @@ ENV UV_SYSTEM_PYTHON=true
 WORKDIR /app
 
 
-COPY pyproject.toml
+COPY pyproject.toml .
 
 RUN uv pip install --system .
 
@@ -16,4 +16,4 @@ COPY utils/ /app/utils/
 COPY queries/ /app/queries/
 COPY main.py .
 
-CMD ["uv", "run", "main.py"]
+CMD ["uv", "run", "main.py", "--create_db"]
