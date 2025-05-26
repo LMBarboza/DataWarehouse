@@ -20,7 +20,7 @@ services:
 
   app:
     build:
-      context: . 
+      context: ./scripts/ 
       dockerfile: Dockerfile
     container_name: python 
     restart: on-failure 
