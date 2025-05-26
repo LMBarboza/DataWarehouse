@@ -1,0 +1,20 @@
+erDiagram
+    PF }|--|| PJ : Emprega
+    PF ||--|{ RESERVA : Faz
+
+    PJ ||--|{ RESERVA : Oferece
+    PJ ||--o{ PATIO : Possui
+    PJ ||--o{ VEICULO : Possui
+
+    RESERVA }|--|| VEICULO : Inclui
+    RESERVA ||--|| LOCACAO : Gera
+
+    LOCACAO }|--|| SEGUROS : Usa
+    LOCACAO ||--|{ VAGAS : Usa
+    LOCACAO }|--|{ ESTADO_VEICULO : Registra
+
+    VEICULO ||--|{ ESTADO_VEICULO : Tem
+    VEICULO ||--|| DISPONIBILIDADE : Reflete
+    VEICULO o|--|o VAGAS : Ocupa
+
+    VAGAS }|--|| PATIO : Está_em
